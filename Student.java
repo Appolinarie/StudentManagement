@@ -10,6 +10,11 @@ public class Student {
     private List<String> skills;
     private Map<String, Double> courses;
 
+
+
+    private boolean bonusApplied = false;
+    private double originalAverage = -1;
+
     public Student(int id, int age, String studentName, List<String> skills,Map<String, Double> courses) {
         this.id = id;
         this.age = age;
@@ -58,6 +63,31 @@ public class Student {
         return courses;
     }
 
+     public boolean isBonusApplied() {
+         return bonusApplied; 
+        }
+    public void setBonusApplied(boolean bonusApplied) {
+         this.bonusApplied = bonusApplied;
+         }
+
+    public void setOriginalAverage(double originalAverage) { 
+        this.originalAverage = originalAverage;
+     }
+
+
+    public double getAverage() {
+        return courses.values().stream()
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(0.0);
+    }
+
+    
+    public double getOriginalAverage() {
+        return bonusApplied ? originalAverage : getAverage();
+    }
+
+
     @Override
     public String toString() {
         return "Student{" +
@@ -66,6 +96,7 @@ public class Student {
                 ", studentName='" + studentName + '\'' +
                 ", skills=" + skills +
                 ", courses and marks=" + courses +
+                ", average=" + 
                 '}';
     }
 }
